@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NNT Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #notes {
+            font-weight:none;
+            background-color: #f2f2f2;
+            background-size: cover;
+            margin-top:0;
+        }
+        p {
+            text-align: left;
+            font-size: smaller;
+            margin-left: 0;
+            margin-bottom: 5px;
+            line-height: .5;
+            font-size: .75vw;
+
+        }
+        h1 {
+            text-align: left;
+            font-size: 1.5vw;
+            margin-left: 0;
+            margin-bottom: 10px;
+            line-height: .1;
+
+        }
+        img {
+            position: absolute;
+            bottom: 2vw;
+            right:5vh;
+            height:10vw;
+
+        }
+    
+        #container {
+            width: 95%;
+            max-width: 1600px;
+            box-sizing: border-box;
+            background-color: #f2f2f2;
+    
+            
+        }
+         
+      
+        
+        table {
+            width: 100%;
+            border-spacing: 0;
+            border: 2px solid black;
+            font-weight: bold;
+        }
+
+        td {
+            width: 33.33%;
+            vertical-align: top; 
+            padding: 0;
+        }
+
+        #instructions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .instructionRow {
+            margin-bottom: 0px;
+        }
+
+        .instructionLabel {
+            font-size: 2vw;
+            font-weight: bold;
+            width: 100%;
+            text-align: right;
+          
+        }
+
+        .sliderContainer {
+            box-sizing: border-box;
+            color: black;
+            padding-left: 4vw;
+            padding-right: 4vw;
+        }
+
+        .sliderLabel {
+            font-size: 2vw;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            
+            
+        }
+
+        .slider {
+            width: 16vw; 
+            height: 10px; 
+            -webkit-appearance: none;
+            position: absolute;
+            left:72%;
+            margin-top: 10px;
+        }
+            
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%; 
+            border: 3px solid black;
+            background: white;
+            cursor: pointer;
+        }
+
+        .sliderRange {
+            display: flex;
+            justify-content: space-between;
+            color: black;
+            font-size: 2vw;
+            
+        }
+
+        .inputNumberDisplay {
+            font-size: 1px;
+            text-align: center;
+            height: 25px; 
+        }
+
+        
+        #numberDisplays {
+            font-size: 30pt;
+        }
+
+        #nntResult {
+            padding: 10px;
+            font-size: 2.5vw;
+            color: white;
+            width: 100%;
+            text-align: right;
+            box-sizing: border-box;
+            background-color: black;
+        }
+     
+
+      
+    </style>
+</head>
+<body>
+    <div id="container">
+        <header style="background-color: white;background-size:20px 20px;height:48px">
+        <span style="float:left;"><u><b>NUMBER NECESSARY TO TREAT (NNT) Per Day to Prevent One ASCVD EVENT CALCULATOR</u></b></span>
+<br>
+<div style="border: 2px solid black; color:#424043; font-size: larger;">
+        <span><h1><b>[Brook et al., Air Quality Index Guidance]</b><span style="margin-left:45vw;"><b>Estimated Range</b></span></h1>
+    </div>
+    </header>
+        <table>
+        <tr style="background-color:lightgray">
+                <td style="width:50%;">
+                    <div id="instructions">
+                        <div class="instructionRow" style="background-color:#006766;color:white;height:85px;width:100%;padding-top:10px;">
+                            <span class="instructionLabel" style="font-size: 1.5vw;"><u>STEP 1.</u> Enter 10-year ASCVD risk<sup>1</sup></span><br>
+                            <span class="instructionLabel" style="font-size: 1vw;color:gold"><em><span style="color:white;">(</span>enter a #,  not a proportion; e.g., '10' correctly represents '10%', not '0.10' or '10%'<span style="color:white;">):</em></span></span>
+                            <span id="patientsWithEventValue" class="inputNumberDisplay" style="color:#006766;">0</span>
+                        </div>
+                        <div class="instructionRow" style="background-color:#c6e0b3;height:85px;width:100%;padding-top:10px;">
+                            <span class="instructionLabel"style="font-size: 1.5vw;" ><u>STEP 2.</u> Enter PM<sub>2.5</sub> concentration to convert to AQI<sup>2</sup></span><br>
+                            <span class="instructionLabel" style="font-size: 1vw;"><em>(enter a # to convert to Air Quality Index; e.g., '117' ):</em></span>
+                            <span id="totalPatientsTreatmentValue" class="inputNumberDisplay" style="color:#c6e0b3;">13</span>
+                        </div>
+                        <div class="instructionRow" style="background-color: #e1efdb ;height:85px;width:100%;padding-top:10px;">
+                            <span class="instructionLabel" style="font-size: 1.5vw;"><u>STEP 3.</u> Effectiveness of intervention to reduce exposure<sup>3</sup></span><br>
+                            <span class="instructionLabel" style="font-size: 1vw;"><em>(enter a #,  not a proportion; e.g., '35' correctly represents '35%', not '0.35' or '35%'):</em></span>
+                            <span id="eventRateControlValue" class="inputNumberDisplay" style="color: #e1efdb;margin-top:50px">15</span>
+                        </div>
+                        <div class="instructionRow" style="height:5vh;width:100%">
+                            <span class="instructionLabel" style="float: right;padding-top: 20px;">NNT<sub>1</sub> (day)<sup>4</sup>:</span>
+                        </div>
+                    </div>
+                </td>
+                <td style="background-color:#fff2cd;font-size:60px;width: 15%;">
+                    <div id="numberDisplays">
+                        <div class="inputNumberDisplay" style="color:#006766;font-size:4.5vw;padding-top: 22px;padding-bottom: 20px;border: 2px solid black;height: 50px;" >
+                            <span id="patientsWithEventDisplay" style="float:right;" >1</span>
+                        </div>
+                        <div class="inputNumberDisplay" style="color:#006766;font-size:4.5vw; padding-top: 22px;padding-bottom: 20px;border: 2px solid black;height: 50px;">
+                            <span id="totalPatientsTreatmentDisplay" style="float:right;" >13</span>
+                        </div>
+                        <div class="inputNumberDisplay" style="color:#006766;font-size:4.5vw;padding-top: 22px;padding-bottom: 20px;border: 2px solid black;height: 50px; ">
+                            <span id="eventRateControlDisplay" style="float:right;" >15</span>
+                        </div>
+                        <div id="nntResult"></div>
+                    </div>
+                </td>
+                <td style="background-color:lightgrey;width:40%">
+                    <div id="calculator">
+                        <div class="sliderContainer" style="background-color:#006766;color:white;height:95px;padding-top: 35px; ">
+                            <label class="sliderLabel" for="patientsWithEvent" title = "Use Arrow Keys For Precise Selection";>
+                                <span>1</span>
+                                <input type="range" id="patientsWithEvent" class="slider" min="1" max="20" step="1" oninput="calculateNNT()">
+                                <span>20%</span>
+                            </label>
+                        </div>
+
+                        <div class="sliderContainer" style="background-color:#c6e0b3;height:95px;padding-top: 35px; padding-right:30px">
+                            <label class="sliderLabel" for="totalPatientsTreatment" style="color:black;" title = "Use Arrow Keys For Precise Selection">
+                                <span>13</span>
+                                <input type="range" id="totalPatientsTreatment" class="slider" min="13" max="500" step="1" oninput="calculateNNT()" style="background-color: black;">
+                                <span>500<span style="font-size:1vw;">µ/mg<sup>3</sup></span> </span>
+                            </label>
+                        </div>
+
+                        <div class="sliderContainer" style="background-color: #e1efdb ;height:95px ;padding-top: 35px; ">
+                            <label class="sliderLabel" for="eventRateControl" style="color:black; " title = "Use Arrow Keys For Precise Selection">
+                                <span>15</span>
+                                <input type="range" id="eventRateControl" class="slider" min="15" max="50" step="1" oninput="calculateNNT()" style="background-color: black; ">
+                                <span>50%</span>
+                            </label>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div class="notes" style="background-color:#f2f2f2;">
+            <p><b>Notes:</b></p>
+            <p><b>1. To calculate 10-year ASCVD risk visit ACC website:</b></p>
+            <p><a href="https://tools.acc.org/ldl/ascvd_risk_estimator/index.html#!/calulate/estimator/">https://tools.acc.org/ldl/ascvd_risk_estimator/index.html#!/calulate/estimator/</a></p>
+            <p><b>2. To convert PM<sub>2.5</sub> to AQI visit EPA airnow website (must be >12 µg/m<sup>3</sup>):</b></p>
+            <p><a href="https://www.airnow.gov/aqi/aqi-calculator-concentration/">https://www.airnow.gov/aqi/aqi-calculator-concentration/</a></p>
+            <p><b>3. AQI activity guidelines for the general adult population (without heart or lung disease):</b><span style="margin-left:11.5vw;"><b>Recommendation</b></span><span style="margin-left:13vw;"><b>Estimated exposure reduction (range)</b></span></p>
+            <p>Unhealthy (AQI 151-200; PM<sub>2.5</sub>: 55.5 – 150.4 µg/m<sup>3</sup>)<span style="margin-left:25.7vw;">↓ Prolonged/heavy exertion outdoors</span><span style="margin-left:7vw;">15% (10-20%)</span></p>
+            <p>Very unhealthy (AQI 201-300; PM<sub>2.5</sub>: 150.5 – 250.4 µg/m<sup>3</sup>)<span style="margin-left:23.7vw;">Avoid prolonged/heavy exertion outdoors</span><span style="margin-left:5.6vw;">25% (20-30%)</span><a href="https://phoenix.wayne.edu/" target="_blank"><img src="https://i.ibb.co/tcqksyV/phxinhouse.png"></a></p>
+            <p>Hazardous (AQI 301-500; PM<sub>2.5</sub>: 250.5-500.4 µg/m<sup>3</sup>)<span style="margin-left:25.6vw;">Avoid all physical activities outdoors</span><span style="margin-left:7.3vw;">35% (30-40%)</span></p></p>
+            <p>Wildfires and severe events (e.g., "hazardous" AQI levels)<span style="margin-left:24vw;">Remain indoors/keep activities low</span><span style="margin-left:7.8vw;">50% (40-60%)</span></p></p>
+            <p><b>4. Number needed to treat per day to prevent 1 ASCVD event (fatal or nonfatal MI or stroke)</b></p>
+
+    </div>
+    </div>
+    
+    <script>
+        function calculateNNT() {
+            var a = parseFloat(document.getElementById('patientsWithEvent').value);
+            var b = parseFloat(document.getElementById('totalPatientsTreatment').value);
+            var c = parseFloat(document.getElementById('eventRateControl').value);
+
+            // Update slider values display
+            document.getElementById('patientsWithEventValue').innerText = a;
+            document.getElementById('totalPatientsTreatmentValue').innerText = b;
+            document.getElementById('eventRateControlValue').innerText = c;
+
+            // Update input number displays
+            document.getElementById('patientsWithEventDisplay').innerText = a;
+            document.getElementById('totalPatientsTreatmentDisplay').innerText = b;
+            document.getElementById('eventRateControlDisplay').innerText = c;
+
+            // Check if the inputs are valid
+            if (isNaN(a) || isNaN(b) || isNaN(c) || a < 0 || b < 13 || b > 500 || c < 15 || c > 50) {
+                document.getElementById('nntResult').innerHTML = "Invalid Input";
+            } else {
+                // Calculate X, Y, Z, and NNT
+                var X = (a / 1000 / 365 * 1000000);
+                var Y = (b - 12) / 1000 * X;
+                var Z = Y * (c / 100);
+                var nnt = Math.round(1 / Z * 1000000);
+
+                document.getElementById('nntResult').innerHTML = `  ${nnt.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+            }
+        }
+
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            calculateNNT();
+        });
+    </script>
+</body>
+</html>
